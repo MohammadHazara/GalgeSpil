@@ -23,26 +23,6 @@
         android:textAlignment="center"
         android:textSize="36sp" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textCapCharacters"
-        android:ems="10"
-        android:layout_below="@+id/synligOrd"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:id="@+id/editText"
-        android:hint="indtast et bogstav her"
-        android:textAlignment="center" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/galge"
-        android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,8 +31,9 @@
         android:layout_alignTop="@+id/editText"
         android:layout_centerHorizontal="true"
         android:textStyle="normal|bold"
-        android:textAllCaps="true"
-        android:textColor="@android:color/holo_green_dark" />
+        android:textAllCaps="false"
+        android:textColor="@android:color/holo_green_dark"
+        android:textAlignment="center" />
 
     <TextView
         android:text="Score:"
@@ -61,16 +42,8 @@
         android:layout_width="80dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_height="30dp" />
-
-    <Button
-        android:text="Nulstil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:id="@+id/nulstil"
-        android:layout_below="@+id/editText"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="20dp"
+        android:layout_height="90dp" />
 
     <TextView
         android:text="Brugte bogstaver: "
@@ -90,5 +63,36 @@
         android:textSize="18sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/galge"
+        android:id="@+id/imageView"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:hint="indtast et bogstav her"
+        android:textAlignment="center"
+        android:inputType="text"
+        android:textSize="18sp"
+        android:layout_below="@+id/synligOrd"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Nulstil"
+        android:layout_marginTop="20dp"
+        android:id="@+id/nulstil"
+        android:background="@android:color/holo_blue_dark"
+        android:layout_height="60dp"
+        android:layout_width="160dp"
+        android:layout_below="@+id/status"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
