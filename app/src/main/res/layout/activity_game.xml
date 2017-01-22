@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_game"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -12,7 +14,7 @@
     tools:context="com.mh.galgespil.GameActivity">
 
     <TextView
-        android:text="synligOrd"
+        android:text="@string/synligord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -36,17 +38,17 @@
         android:textAlignment="center" />
 
     <TextView
-        android:text="Score:"
         android:id="@+id/score"
         android:textSize="14sp"
         android:layout_width="80dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
-        android:layout_height="90dp" />
+        android:layout_height="90dp"
+        android:text="SCORE BOARD" />
 
     <TextView
-        android:text="Brugte bogstaver: "
+        android:text="@string/brugte_tegn"
         android:layout_width="match_parent"
         android:id="@+id/textView5"
         android:textStyle="normal|bold"
@@ -78,17 +80,19 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editText"
-        android:hint="indtast et bogstav her"
+        android:hint="@string/indtast_et_bogstav_her"
         android:textAlignment="center"
         android:inputType="text"
         android:textSize="18sp"
         android:layout_below="@+id/synligOrd"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 
     <Button
-        android:text="Nulstil"
+        android:text="@string/nulstil"
         android:layout_marginTop="20dp"
-        android:id="@+id/nulstil"
+        android:id="@+id/reset_btn"
         android:background="@android:color/holo_blue_dark"
         android:layout_height="60dp"
         android:layout_width="160dp"

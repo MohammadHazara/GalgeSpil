@@ -1,5 +1,8 @@
 package com.mh.galgespil;
 
+import android.os.AsyncTask;
+import android.os.StrictMode;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -56,8 +59,11 @@ public class Galgelogik {
         return spilletErTabt || spilletErVundet;
     }
 
+    public ArrayList<String> getMuligeOrd() { return muligeOrd; }
+
 
     public Galgelogik() {
+
         muligeOrd.add("bil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
@@ -69,6 +75,11 @@ public class Galgelogik {
         nulstil();
     }
 
+    public void setOrdet(String ord){
+        ordet = ord;
+        opdaterSynligtOrd();
+    }
+
     public void nulstil() {
         brugteBogstaver.clear();
         antalForkerteBogstaver = 0;
@@ -77,7 +88,6 @@ public class Galgelogik {
         ordet = muligeOrd.get(new Random().nextInt(muligeOrd.size()));
         opdaterSynligtOrd();
     }
-
 
     private void opdaterSynligtOrd() {
         synligtOrd = "";
@@ -140,15 +150,21 @@ public class Galgelogik {
     }
 
     public void hentOrdFraDr() throws Exception {
-        String data = hentUrl("http://dr.dk");
-        System.out.println("data = " + data);
+        String data = hentUrl("http://www.dr.dk");
+        data =  data.substring(data.indexOf("<body")).  // fjern headere
+                replaceAll("<.+?>", " ").toLowerCase(). // fjern tags
+                replaceAll("[^a-zæøå]", " ").           // fjern tegn der ikke er bogstaver
+                replaceAll(" [a-zæøå] "," ").           // fjern 1-bogstavsord
+                replaceAll(" [a-zæøå][a-zæøå] "," ");   // fjern 2-bogstavsord
 
-        data = data.replaceAll("<.+?>", " ").toLowerCase().replaceAll("[^a-zæøå]", " ");
-        System.out.println("data = " + data);
         muligeOrd.clear();
         muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
 
         System.out.println("muligeOrd = " + muligeOrd);
         nulstil();
     }
+
+
+
+
 }

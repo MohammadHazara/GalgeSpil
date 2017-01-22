@@ -1,40 +1,77 @@
 package com.mh.galgespil;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.provider.DocumentsContract;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import static android.view.KeyEvent.KEYCODE_BACK;
-import static android.view.KeyEvent.KEYCODE_DEL;
+import static android.view.KeyEvent.KEYCODE_A;
+import static android.view.KeyEvent.KEYCODE_B;
+import static android.view.KeyEvent.KEYCODE_C;
+import static android.view.KeyEvent.KEYCODE_D;
+import static android.view.KeyEvent.KEYCODE_E;
 import static android.view.KeyEvent.KEYCODE_ENTER;
+import static android.view.KeyEvent.KEYCODE_F;
+import static android.view.KeyEvent.KEYCODE_G;
+import static android.view.KeyEvent.KEYCODE_H;
+import static android.view.KeyEvent.KEYCODE_I;
+import static android.view.KeyEvent.KEYCODE_J;
+import static android.view.KeyEvent.KEYCODE_K;
+import static android.view.KeyEvent.KEYCODE_L;
+import static android.view.KeyEvent.KEYCODE_M;
+import static android.view.KeyEvent.KEYCODE_N;
+import static android.view.KeyEvent.KEYCODE_O;
+import static android.view.KeyEvent.KEYCODE_P;
+import static android.view.KeyEvent.KEYCODE_Q;
+import static android.view.KeyEvent.KEYCODE_R;
+import static android.view.KeyEvent.KEYCODE_S;
+import static android.view.KeyEvent.KEYCODE_T;
+import static android.view.KeyEvent.KEYCODE_U;
+import static android.view.KeyEvent.KEYCODE_V;
+import static android.view.KeyEvent.KEYCODE_W;
+import static android.view.KeyEvent.KEYCODE_X;
+import static android.view.KeyEvent.KEYCODE_Y;
+import static android.view.KeyEvent.KEYCODE_Z;
+
 
 public class GameActivity extends AppCompatActivity implements View.OnKeyListener {
 
-    Galgelogik spil ;
+    Galgelogik spil;
     TextView synligOrd, statusBar, bogstaverBrugt, point;
     ImageView imageView;
     EditText editText;
     Button nulstil;
     int score = 0, record = 0;
+    private InputMethodManager in;
+
+    boolean ordSat = false;
+
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        score = sharedPref.getInt("score", 0);
+        record = sharedPref.getInt("rekord", 0);
+
+        spil = new Galgelogik();
 
         imageView = (ImageView) findViewById(R.id.imageView);
         point = (TextView) findViewById(R.id.score);
@@ -43,37 +80,25 @@ public class GameActivity extends AppCompatActivity implements View.OnKeyListene
         bogstaverBrugt = (TextView) findViewById(R.id.bogstaverBrugt);
         editText = (EditText) findViewById(R.id.editText);
         editText.setOnKeyListener(this);
-        nulstil = (Button) findViewById(R.id.nulstil);
-        spil = new Galgelogik();
-        try {
-            spil.hentOrdFraDr();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        newGame();
+
+        nulstil = (Button) findViewById(R.id.reset_btn);
+        nulstil.setVisibility(View.INVISIBLE);
+
+        hentOrdFraDR(); // denne methode laver også nyt spil
 
     }
-
-
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        //filter for key release only
-        if (event.getAction() != KeyEvent.ACTION_DOWN)
-            return true;
-        if (keyCode == KEYCODE_ENTER) {
-            tjekInput(editText.getText().toString().toLowerCase());
-            bogstaverBrugt.setText(spil.getBrugteBogstaver().toString().toUpperCase());
-            editText.selectAll();
-            tjekStatus();
-        }
-        return false;
-    }
-
 
     private void newGame() {
         spil.nulstil();
         imageView.setImageResource(R.drawable.galge);
-        synligOrd.setText(spil.getSynligtOrd());
+        point.setText(String.format(getString(R.string.score_line), score, record));
+        if (!ordSat && getIntent() != null &&  getIntent().getStringExtra("ord") != null){
+            spil.setOrdet(getIntent().getStringExtra("ord"));
+            synligOrd.setText(spil.getSynligtOrd());
+            ordSat = true;
+        }
+        else synligOrd.setText(spil.getSynligtOrd());
+
         statusBar.setVisibility(View.INVISIBLE);
         statusBar.setTextColor(Color.GREEN);
         nulstil.setVisibility(View.INVISIBLE);
@@ -90,50 +115,72 @@ public class GameActivity extends AppCompatActivity implements View.OnKeyListene
         );
     }
 
-    private void tjekStatus() {
 
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+        if((keyCode >= KEYCODE_A && keyCode <= KEYCODE_Z) || (keyCode >= 65 && keyCode <= 90)){
+            tjekInput(editText.getText().toString().toLowerCase());
+            bogstaverBrugt.setText(spil.getBrugteBogstaver().toString().toUpperCase());
+            editText.selectAll();
+            tjekStatus();
+        }
+
+        else if (keyCode == KEYCODE_ENTER) {
+            tjekInput(editText.getText().toString().toLowerCase());
+            bogstaverBrugt.setText(spil.getBrugteBogstaver().toString().toUpperCase());
+            editText.selectAll();
+            tjekStatus();
+        }
+        return false;
+    }
+
+
+    private void tjekStatus() {
+        in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (spil.erSpilletSlut()) {
             editText.setVisibility(View.INVISIBLE);
+            in.hideSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             if (spil.erSpilletVundet()) {
                 score += (spil.getOrdet().length() * 20) - (spil.getAntalForkerteBogstaver() * 10);
-                if(score > record) record = score;
-                point.setText("Score: \n" + score + "\nRecord: \n"+record);
-                statusBar.setText("ER KORREKT");
-                nulstil.setText("nyt ord");
-                nulstil.requestFocus();
+                if (score > record) record = score;
+                point.setText(String.format(getString(R.string.score_line), score, record));
+                statusBar.setText(R.string.correct_word_message);
+                nulstil.setText(R.string.new_word);
             } else if (spil.erSpilletTabt()) {
                 statusBar.setTextColor(Color.RED);
-                statusBar.setText("DU HAR TABT");
-                nulstil.setText("nyt spil");
+                statusBar.setText(R.string.loosing_text);
+                synligOrd.setText(getString(R.string.correct_word) + spil.getOrdet() + "\"");
+                nulstil.setText(R.string.new_game);
                 score = 0;
-                point.setText("Score: " + score + "\nRecord: "+record);
+                point.setText(String.format(getString(R.string.score_line), score, record));
             }
             statusBar.setVisibility(View.VISIBLE);
             nulstil.setVisibility(View.VISIBLE);
         }
     }
 
-
     private void tjekInput(String s) {
         if (s.length() > 1) {
             if (s.equals(spil.getOrdet())) {
-                for(int i = 0; i < s.length(); i++){
-                    spil.gætBogstav(s.substring(i, i+1));
+                for (int i = 0; i < s.length(); i++) {
+                    spil.gætBogstav(s.substring(i, i + 1));
                     synligOrd.setText(spil.getSynligtOrd());
-                    bogstaverBrugt.setText(spil.getBrugteBogstaver().toString().toUpperCase());
                 }
-
-            }else{
-                score -= 50;
-                point.setText("Score: \n" + score + "\nRecord: \n"+record);
+            } else {
+                if (score > 50) score -= 50;
+                else score = 0;
+                point.setText(String.format(getString(R.string.score_line), score, record));
+                Toast t = Toast.makeText(GameActivity.this, "FORKERT ORD! \nDu mister point!",
+                        Toast.LENGTH_SHORT);
+                t.setGravity(Gravity.CENTER, 0, 0);
+                t.show();
             }
         } else {
             spil.gætBogstav(s);
             if (spil.erSidsteBogstavKorrekt()) {
                 synligOrd.setText(spil.getSynligtOrd());
-                bogstaverBrugt.setText(spil.getBrugteBogstaver().toString().toUpperCase());
-            } else if (!spil.erSidsteBogstavKorrekt()) {
-                bogstaverBrugt.setText(spil.getBrugteBogstaver().toString().toUpperCase());
+            } else {
                 switch (spil.getAntalForkerteBogstaver()) {
                     case 1:
                         imageView.setImageResource(R.drawable.forkert1);
@@ -153,8 +200,40 @@ public class GameActivity extends AppCompatActivity implements View.OnKeyListene
                     case 6:
                         imageView.setImageResource(R.drawable.forkert6);
                         break;
+                    case 7:
+                        imageView.setImageResource(R.drawable.forkert6);
                 }
             }
+            bogstaverBrugt.setText(spil.getBrugteBogstaver().toString().toUpperCase());
         }
+    }
+
+
+    void hentOrdFraDR(){
+        new AsyncTask<String,Void,String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                try {
+                    spil.hentOrdFraDr();
+                    return "Ordlisten er opdateret";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "Ordene blev ikke hentet korrekt";
+                }
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                System.out.println(s.toString());
+                newGame();
+            }
+        }.execute();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sharedPref.edit().putInt("rekord", record).apply();
+        sharedPref.edit().putInt("score", score).apply();
     }
 }

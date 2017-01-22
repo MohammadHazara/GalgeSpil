@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Galge Spil</string>
+    <string name="brugte_tegn">"Brugte bogstaver: "</string>
+    <string name="indtast_et_bogstav_her">indtast et bogstav her</string>
+    <string name="loosing_text">DU HAR TABT</string>
+    <string name="nulstil">NULSTIL</string>
+    <string name="synligord">Vent venligst mens ordlisten opdateres</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="score_line">Score: \n %1$d \nBedst: \n %2$d</string>
+    <string name="correct_word_message">ER KORREKT</string>
+    <string name="auto_complete_text">søg her</string>
+    <string name="new_game">Nyt spil</string>
+    <string name="new_word">Nyt ord</string>
+    <string name="correct_word">"Ordet var: "</string>
+    <string name="Start_Game_string">Start Spil</string>
+    <string name="word_list_btn_text">Ordliste</string>
+</resources>

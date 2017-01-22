@@ -1,7 +1,19 @@
 <resources>
-    <string name="app_name">GalgeSpil</string>
+    <string name="app_name">Galge Spil</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="nulstil">RESET</string>
+    <string name="synligord">plaease wait while updating glosary list</string>
+    <string name="brugte_tegn">"Used letters: "</string>
+    <string name="loosing_text">YOU HAVE LOST</string>
+    <string name="indtast_et_bogstav_her">enter a letter here</string>
+    <string name="correct_word_message">IS CORRECT</string>
+    <string name="score_line">Score: \n %1$d \nBest: \n %2$d</string>
+    <string name="auto_complete_text">search here</string>
+    <string name="new_word">New word</string>
+    <string name="new_game">New Game</string>
+    <string name="correct_word">"The correct word was: "</string>
+    <string name="Start_Game_string">Start Game</string>
+    <string name="word_list_btn_text">Glossary</string>
 </resources>
