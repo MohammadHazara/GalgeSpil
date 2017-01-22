@@ -201,7 +201,7 @@ public class GameActivity extends AppCompatActivity implements View.OnKeyListene
                         imageView.setImageResource(R.drawable.forkert6);
                         break;
                     case 7:
-                        imageView.setImageResource(R.drawable.forkert6);
+                        imageView.setImageResource(R.drawable.forkert7);
                 }
             }
             bogstaverBrugt.setText(spil.getBrugteBogstaver().toString().toUpperCase());
