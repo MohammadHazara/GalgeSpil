@@ -8,14 +8,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.mh.galgespil.OrdList"
     android:orientation="vertical">
 
     <TextView
-        android:text="Tryk på et ord og hold den nede for at starte et nyt spil med den valgte ord"
+        android:text="@string/ordliste_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:gravity="center"
         android:id="@+id/textView3" />
 
@@ -24,15 +26,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/autoCompleteTextView"
         android:textSize="18sp"
+        android:nextFocusUp="@id/autoCompleteTextView"
+        android:nextFocusLeft="@id/autoCompleteTextView"
         />
-
-    <Button
-        android:text="Button"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/addWordButton"
-        android:layout_gravity="center"
-        android:visibility="gone"/>
 
     <ListView
         android:layout_width="match_parent"

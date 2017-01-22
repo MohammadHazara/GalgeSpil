@@ -15,4 +15,9 @@
     <string name="correct_word">"Ordet var: "</string>
     <string name="Start_Game_string">Start Spil</string>
     <string name="word_list_btn_text">Ordliste</string>
+    <string name="succesfull_message">Ordlisten er opdateret</string>
+    <string name="unsuccesfull_message">Kunne ikke hente nye ord</string>
+    <string name="wrong_word_message">FORKERT ORD!</string>
+    <string name="ordliste_title">Tryk på et ord og hold den nede for at starte et nyt spil med den valgte ord</string>
+    <string name="welcome_text">Velkommen til Galge Spil</string>
 </resources>

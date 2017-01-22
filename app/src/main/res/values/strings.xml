@@ -16,4 +16,9 @@
     <string name="correct_word">"The correct word was: "</string>
     <string name="Start_Game_string">Start Game</string>
     <string name="word_list_btn_text">Glossary</string>
+    <string name="wrong_word_message">Wrong Word!</string>
+    <string name="succesfull_message">List is now updated</string>
+    <string name="unsuccesfull_message">Couldn\'t receive new words</string>
+    <string name="ordliste_title">Tap and hold on a word to start a game with that word</string>
+    <string name="welcome_text">Welcome to Galge Spil</string>
 </resources>

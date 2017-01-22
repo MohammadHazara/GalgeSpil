@@ -6,13 +6,12 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
 
 public class OrdList extends AppCompatActivity implements AdapterView.OnItemLongClickListener{
 
@@ -20,7 +19,6 @@ public class OrdList extends AppCompatActivity implements AdapterView.OnItemLong
     AutoCompleteTextView textView;
     ListView listView;
     ArrayAdapter<String> adapter;
-    Button addButton;
     final Galgelogik gl = new Galgelogik();
 
     @Override
@@ -28,22 +26,15 @@ public class OrdList extends AppCompatActivity implements AdapterView.OnItemLong
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ord_list);
 
-        addButton = (Button) findViewById(R.id.addWordButton);
-
-        updateWords();
-
-
         adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, gl.getMuligeOrd());
         listView = (ListView) findViewById(R.id.listView);
+        listView.setOnItemLongClickListener(this);
 
         textView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(adapter);
         textView.setHint(R.string.auto_complete_text);
         textView.setDropDownHeight(0);
-
-        listView.setAdapter(adapter);
-        listView.setOnItemLongClickListener(this);
-
+        updateWords();
     }
 
     @Override
@@ -75,10 +66,14 @@ public class OrdList extends AppCompatActivity implements AdapterView.OnItemLong
             }
             @Override
             protected void onPostExecute(String o) {
+                listView.setAdapter(adapter);
                 Toast.makeText(getApplicationContext(), ""+o , Toast.LENGTH_SHORT).show();
-                listView.invalidateViews();
             }
         }.execute();
     }
+
+
+
+
 
 }

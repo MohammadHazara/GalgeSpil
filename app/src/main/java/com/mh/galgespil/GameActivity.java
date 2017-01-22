@@ -5,46 +5,19 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import static android.view.KeyEvent.KEYCODE_A;
-import static android.view.KeyEvent.KEYCODE_B;
-import static android.view.KeyEvent.KEYCODE_C;
-import static android.view.KeyEvent.KEYCODE_D;
-import static android.view.KeyEvent.KEYCODE_E;
 import static android.view.KeyEvent.KEYCODE_ENTER;
-import static android.view.KeyEvent.KEYCODE_F;
-import static android.view.KeyEvent.KEYCODE_G;
-import static android.view.KeyEvent.KEYCODE_H;
-import static android.view.KeyEvent.KEYCODE_I;
-import static android.view.KeyEvent.KEYCODE_J;
-import static android.view.KeyEvent.KEYCODE_K;
-import static android.view.KeyEvent.KEYCODE_L;
-import static android.view.KeyEvent.KEYCODE_M;
-import static android.view.KeyEvent.KEYCODE_N;
-import static android.view.KeyEvent.KEYCODE_O;
-import static android.view.KeyEvent.KEYCODE_P;
-import static android.view.KeyEvent.KEYCODE_Q;
-import static android.view.KeyEvent.KEYCODE_R;
-import static android.view.KeyEvent.KEYCODE_S;
-import static android.view.KeyEvent.KEYCODE_T;
-import static android.view.KeyEvent.KEYCODE_U;
-import static android.view.KeyEvent.KEYCODE_V;
-import static android.view.KeyEvent.KEYCODE_W;
-import static android.view.KeyEvent.KEYCODE_X;
-import static android.view.KeyEvent.KEYCODE_Y;
 import static android.view.KeyEvent.KEYCODE_Z;
 
 
@@ -171,7 +144,7 @@ public class GameActivity extends AppCompatActivity implements View.OnKeyListene
                 if (score > 50) score -= 50;
                 else score = 0;
                 point.setText(String.format(getString(R.string.score_line), score, record));
-                Toast t = Toast.makeText(GameActivity.this, "FORKERT ORD! \nDu mister point!",
+                Toast t = Toast.makeText(GameActivity.this, R.string.wrong_word_message,
                         Toast.LENGTH_SHORT);
                 t.setGravity(Gravity.CENTER, 0, 0);
                 t.show();
@@ -215,10 +188,10 @@ public class GameActivity extends AppCompatActivity implements View.OnKeyListene
             protected String doInBackground(String... params) {
                 try {
                     spil.hentOrdFraDr();
-                    return "Ordlisten er opdateret";
+                    return getString(R.string.succesfull_message);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return "Ordene blev ikke hentet korrekt";
+                    return getString(R.string.unsuccesfull_message);
                 }
             }
             @Override

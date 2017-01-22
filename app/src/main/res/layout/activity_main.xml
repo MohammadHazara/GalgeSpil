@@ -12,7 +12,7 @@
 
 
     <TextView
-        android:text="Velkommen til Galgeleg"
+        android:text="@string/welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
